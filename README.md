@@ -36,7 +36,54 @@ The second page focuses on England and compares property types, first-time buyer
 
 ## Dataset
 
-The analysis uses the **UK House Price Index (UK HPI)** dataset supplied through May 2026. The full source CSV is not stored in this repository because of its file size.
+The analysis uses the **UK House Price Index (UK HPI)** dataset supplied through May 2026. The full source CSV is not stored in this repository because of its file size. A **910-row extract** covering the dashboard geographies and January 2021–May 2026 is included as [dashboard_data.csv](dashboard_data.csv). Missing values are retained.
+
+## Source and reproducibility
+
+- [Official May 2026 UK HPI release and downloads](https://www.gov.uk/government/statistical-data-sets/uk-house-price-index-data-downloads-may-2026)
+- [Exact full CSV used for verification](https://publicdata.landregistry.gov.uk/market-trend-data/house-price-index-data/UK-HPI-full-file-2026-05.csv)
+- [Data extract](dashboard_data.csv), [verified headline measures](verified_metrics.json) and [source checksum / extraction scope](data_provenance.json)
+
+Source attribution: HM Land Registry / UK House Price Index. Contains public-sector information licensed under the [Open Government Licence v3.0](https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/), subject to the publisher's stated exceptions.
+
+The headline figures and derived price differences were checked against the **May 2026 release**, not a later revised dataset. Later releases can revise earlier periods. These figures describe a historical snapshot, not the current market.
+
+To rebuild the extract and verify the headline measures:
+
+```bash
+python -m pip install pandas
+python prepare_data.py /path/to/UK-HPI-full-file-2026-05.csv
+```
+
+Download the linked full CSV first. The script preserves one row per area code and month, selects the dashboard columns and geographies, and writes the extract, metric summary and provenance file.
+
+## Metric definitions
+
+| Dashboard measure | Source field / calculation | Geography and period |
+|---|---|---|
+| Average house price | Published `AveragePrice` | UK, May 2026 |
+| Annual / monthly change | Published `12m%Change` / `1m%Change` | UK, May 2026 |
+| Completed sales | Published `SalesVolume` | UK, March 2026; latest non-missing month in this release |
+| Regional prices / growth | `AveragePrice` / `12m%Change` | Nine English regions plus Wales, Scotland and Northern Ireland |
+| First-time / former owner-occupier prices | `FTBPrice` / `FOOPrice` | England, May 2026 |
+| Mortgage–cash price difference | `MortgagePrice - CashPrice` = £19,521 | England, May 2026 |
+| New-build premium | `(NewPrice / OldPrice - 1) × 100` = 36.8% | England, March 2026 |
+
+The headline UK price is the published UK series, **not an unweighted mean of regional prices**. Price, buyer and new-build comparisons have different geographic or time coverage, shown on the relevant page. Missing recent sales or new-build values are not zero.
+
+## How to recreate the analysis in Power BI
+
+1. Import `dashboard_data.csv`; set `Date` to Date, prices to numeric currency values, published percentage changes to decimal numbers, and sales to whole numbers.
+2. Keep `AreaCode` and `Date` as the area-month key. Use a date table for historical charts.
+3. Filter headline cards to the explicit geography and period in the definitions above. Do not sum prices across months or across geographic levels.
+4. Build monthly UK price/sales charts and the regional comparisons for page 1. Use England rows for page 2's property and buyer comparisons.
+5. Use the same-month formulas above for price differences. Display published changes as percentages without multiplying them again: a stored `2.7` means 2.7%, not 270%.
+
+The repository provides **static PNG previews, a PDF, source extract and verification code**. An editable `.pbix`/`.pbip` model is not included, so these steps describe how to recreate the analysis rather than recover the original report or DAX.
+
+## Interpretation
+
+The comparisons describe market averages. The new-build premium is not a like-for-like valuation uplift; property mix and location can differ. The mortgage–cash gap does not show that financing causes higher prices. The dashboard supports comparison and further investigation, not an investment recommendation.
 
 ## Skills Demonstrated
 
@@ -49,3 +96,4 @@ This project was created for my data analytics portfolio to demonstrate how hous
 ## Author
 
 **Vaibhav Panchal**
+

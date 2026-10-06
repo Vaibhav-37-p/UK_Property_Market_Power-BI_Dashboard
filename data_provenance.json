@@ -1,0 +1,28 @@
+{
+  "source_url": "https://publicdata.landregistry.gov.uk/market-trend-data/house-price-index-data/UK-HPI-full-file-2026-05.csv",
+  "release_page": "https://www.gov.uk/government/statistical-data-sets/uk-house-price-index-data-downloads-may-2026",
+  "source_sha256": "fc341de80c7bbadeb25ad561b9781334d084f2624e49949904118ace5f0a7fff",
+  "full_source_rows": 151110,
+  "extract_rows": 910,
+  "date_range": [
+    "2021-01-01",
+    "2026-05-01"
+  ],
+  "regions": [
+    "North East",
+    "North West",
+    "Yorkshire and The Humber",
+    "East Midlands",
+    "West Midlands",
+    "East of England",
+    "London",
+    "South East",
+    "South West",
+    "Wales",
+    "Scotland",
+    "Northern Ireland",
+    "England",
+    "United Kingdom"
+  ],
+  "note": "Historic May 2026 release; later releases may revise these figures. Missing values retained, not zero-filled."
+}
