@@ -48,14 +48,7 @@ Source attribution: HM Land Registry / UK House Price Index. Contains public-sec
 
 The headline figures and derived price differences were checked against the **May 2026 release**, not a later revised dataset. Later releases can revise earlier periods. These figures describe a historical snapshot, not the current market.
 
-To rebuild the extract and verify the headline measures:
-
-```bash
-python -m pip install pandas
-python prepare_data.py /path/to/UK-HPI-full-file-2026-05.csv
-```
-
-Download the linked full CSV first. The script preserves one row per area code and month, selects the dashboard columns and geographies, and writes the extract, metric summary and provenance file.
+To inspect the figures, open the supplied extract or download the linked full CSV and filter it to the geographies and periods listed below. The included extract and validation files were added during a documentation review; they do not describe the tools used to create the original dashboard.
 
 ## Metric definitions
 
@@ -79,7 +72,7 @@ The headline UK price is the published UK series, **not an unweighted mean of re
 4. Build monthly UK price/sales charts and the regional comparisons for page 1. Use England rows for page 2's property and buyer comparisons.
 5. Use the same-month formulas above for price differences. Display published changes as percentages without multiplying them again: a stored `2.7` means 2.7%, not 270%.
 
-The repository provides **static PNG previews, a PDF, source extract and verification code**. An editable `.pbix`/`.pbip` model is not included, so these steps describe how to recreate the analysis rather than recover the original report or DAX.
+The repository provides **static PNG previews, a PDF, source extract and metric definitions**. An editable `.pbix`/`.pbip` model is not included, so these steps describe how to recreate the analysis rather than recover the original report or DAX.
 
 ## Interpretation
 
